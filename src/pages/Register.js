@@ -17,7 +17,7 @@ function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (handleValidation()) {
-            const { password, confirmPassword, username, email } = values;
+            const { password, username, email } = values;
             const { data } = await axios.post(registerRoute, {
                 username,
                 email,

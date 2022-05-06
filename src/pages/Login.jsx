@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { loginRoute } from "../utils/APIRoutes";
+import Cookies from "js-cookie";
 function Login() {
     const navigate = useNavigate();
     const [values, setValues] = useState({
@@ -24,7 +25,7 @@ function Login() {
                 toast.error(data.mag, toastOptions);
             }
             if (data.status === true) {
-                console.log(data);
+                Cookies.set("token", data.user.token);
                 localStorage.setItem(
                     "chat-app-user",
                     JSON.stringify(data.user)

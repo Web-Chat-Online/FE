@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { setAvatarRoute } from "../utils/APIRoutes";
 import { Buffer } from "buffer";
+import Cookies from "js-cookie";
 export default function SetAvatar() {
     const api = `https://api.multiavatar.com/4645646`;
     const navigate = useNavigate();
@@ -21,10 +22,11 @@ export default function SetAvatar() {
         theme: "dark",
     };
     useEffect(() => {
-        if (!localStorage.getItem("chat-app-user")) {
+        if (!Cookies.get("token")) {
             navigate("/login");
         }
     });
+
     const setProfilePicture = async () => {
         if (selectedAvatar === undefined) {
             toast.error("Please select an avatar", toastOptions);
@@ -40,7 +42,8 @@ export default function SetAvatar() {
                 user.isAvatarImageSet = true;
                 user.avatarImage = data.image;
                 localStorage.setItem("chat-app-user", JSON.stringify(user));
-                navigate("/");
+                localStorage.clear();
+                navigate("/login");
             } else {
                 toast.error(
                     "Error setting avatar, Please try again",

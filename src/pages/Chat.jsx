@@ -6,6 +6,7 @@ import { allUsersRoute, host } from "../utils/APIRoutes";
 import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
 import ChatContainer from "../components/ChatContainer";
+import Cookies from "js-cookie";
 import { io } from "socket.io-client";
 function Chat() {
     const socket = useRef();
@@ -15,7 +16,7 @@ function Chat() {
     const [currentChat, setCurrentChat] = useState(undefined);
     const [isLoaded, setLoaded] = useState(false);
     const GetCurrentUser = async () => {
-        if (!localStorage.getItem("chat-app-user")) {
+        if (!Cookies.get("token")) {
             navigate("/login");
         } else {
             setCurrentUser(
@@ -36,7 +37,6 @@ function Chat() {
 
     const LoadingData = async () => {
         if (currentUser) {
-            console.log(currentUser);
             if (currentUser.isAvatarImageSet) {
                 const data = await axios.get(
                     `${allUsersRoute}/${currentUser._id}`

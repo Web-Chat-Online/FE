@@ -4,9 +4,11 @@ import { BiPowerOff } from "react-icons/bi";
 import styled from "styled-components";
 import axios from "axios";
 import { logoutRoute } from "../utils/APIRoutes";
+import Cookies from "js-cookie";
 export default function Logout() {
     const navigate = useNavigate();
     const handleClick = async () => {
+        Cookies.remove("token");
         localStorage.clear();
         navigate("/login");
     };
